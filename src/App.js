@@ -41,4 +41,23 @@ export default function App() {
       </nav>
     </div>
   );
+}// 1. Importa el componente (arriba del todo junto a los otros imports)
+import StartMenu from "./src/screens/StartMenu";
+
+// 2. Añade un estado para controlar si ya se ha arrancado el juego
+const [gameStarted, setGameStarted] = React.useState(false);
+
+// 3. En el return, pon esto ANTES del resto del JSX:
+if (!gameStarted) {
+  return (
+    <StartMenu
+      onStart={(action) => {
+        if (action === "new" || action === "load") setGameStarted(true);
+        // action === "edit" → puedes navegar a otra pantalla en el futuro
+      }}
+      language={language}
+      setLanguage={setLanguage}
+    />
+  );
 }
+// ... el resto del return de App.js queda igual
