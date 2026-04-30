@@ -52,5 +52,4 @@ export default function Home({ club, t, lang, setLang, navigate }) {
         </div>
       </div>
     </div>
-  );
-}
+  );}

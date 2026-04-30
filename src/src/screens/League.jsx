@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const initialTeams = [
   { id: 1,  name: "Real Madrid",       pts: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, player: false },
   { id: 2,  name: "FC Barcelona",      pts: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, player: false },
-  { id: 3,  name: "FC Tactic Goal",    pts: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, player: true  },
+  { id: 3,  name: "UD Las Palmas",    pts: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, player: true  },
   { id: 4,  name: "Atlético Madrid",   pts: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, player: false },
   { id: 5,  name: "Athletic Club",     pts: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, player: false },
   { id: 6,  name: "Villarreal CF",     pts: 0, pg: 0, pe: 0, pp: 0, gf: 0, gc: 0, player: false },
