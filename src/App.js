@@ -4,11 +4,13 @@ import Squad from "./src/screens/Squad";
 import Tactics from "./src/screens/Tactics";
 import League from "./src/screens/League";
 import Market from "./src/screens/Market";
+import StartMenu from "./src/screens/StartMenu";
 import { useTranslation } from "./src/i18n";
 
 export default function App() {
   const [screen, setScreen] = useState("home");
   const [lang, setLang] = useState("es");
+  const [gameStarted, setGameStarted] = useState(false);
   const t = useTranslation(lang);
 
   const [club] = useState({
@@ -19,6 +21,18 @@ export default function App() {
     points: 24,
     position: 3,
   });
+
+  if (!gameStarted) {
+    return (
+      <StartMenu
+        onStart={(action) => {
+          if (action === "new" || action === "load") setGameStarted(true);
+        }}
+        language={lang}
+        setLanguage={setLang}
+      />
+    );
+  }
 
   const screens = { home: Home, squad: Squad, tactics: Tactics, league: League, market: Market };
   const Screen = screens[screen] || Home;
@@ -41,23 +55,4 @@ export default function App() {
       </nav>
     </div>
   );
-}// 1. Importa el componente (arriba del todo junto a los otros imports)
-import StartMenu from "./src/screens/StartMenu";
-
-// 2. Añade un estado para controlar si ya se ha arrancado el juego
-const [gameStarted, setGameStarted] = React.useState(false);
-
-// 3. En el return, pon esto ANTES del resto del JSX:
-if (!gameStarted) {
-  return (
-    <StartMenu
-      onStart={(action) => {
-        if (action === "new" || action === "load") setGameStarted(true);
-        // action === "edit" → puedes navegar a otra pantalla en el futuro
-      }}
-      language={language}
-      setLanguage={setLanguage}
-    />
-  );
 }
-// ... el resto del return de App.js queda igual
