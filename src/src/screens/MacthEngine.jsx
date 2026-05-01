@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-// ─────────────────────────────────────────────
-// FORMACIONES
-// ─────────────────────────────────────────────
 const formations = {
   "4-2-3-1": [
     { id: 1,  pos: "POR", x: 50, y: 88 },
@@ -15,19 +12,6 @@ const formations = {
     { id: 8,  pos: "EI",  x: 15, y: 38 },
     { id: 9,  pos: "MCO", x: 50, y: 36 },
     { id: 10, pos: "ED",  x: 85, y: 38 },
-    { id: 11, pos: "DC",  x: 50, y: 16 },
-  ],
-  "4-3-2-1": [
-    { id: 1,  pos: "POR", x: 50, y: 88 },
-    { id: 2,  pos: "LD",  x: 82, y: 72 },
-    { id: 3,  pos: "DEF", x: 62, y: 72 },
-    { id: 4,  pos: "DEF", x: 38, y: 72 },
-    { id: 5,  pos: "LI",  x: 18, y: 72 },
-    { id: 6,  pos: "MCD", x: 50, y: 57 },
-    { id: 7,  pos: "MC",  x: 28, y: 50 },
-    { id: 8,  pos: "MC",  x: 72, y: 50 },
-    { id: 9,  pos: "MCO", x: 32, y: 32 },
-    { id: 10, pos: "MCO", x: 68, y: 32 },
     { id: 11, pos: "DC",  x: 50, y: 16 },
   ],
   "4-4-2": [
@@ -43,96 +27,44 @@ const formations = {
     { id: 10, pos: "DC",  x: 35, y: 20 },
     { id: 11, pos: "DC",  x: 65, y: 20 },
   ],
-  "4-1-2-1-2": [
+  "4-3-3": [
     { id: 1,  pos: "POR", x: 50, y: 88 },
     { id: 2,  pos: "LD",  x: 82, y: 72 },
     { id: 3,  pos: "DEF", x: 62, y: 72 },
     { id: 4,  pos: "DEF", x: 38, y: 72 },
     { id: 5,  pos: "LI",  x: 18, y: 72 },
-    { id: 6,  pos: "MCD", x: 50, y: 58 },
-    { id: 7,  pos: "MC",  x: 28, y: 46 },
-    { id: 8,  pos: "MC",  x: 72, y: 46 },
-    { id: 9,  pos: "MCO", x: 50, y: 34 },
-    { id: 10, pos: "DC",  x: 32, y: 18 },
-    { id: 11, pos: "DC",  x: 68, y: 18 },
-  ],
-  "4-2-2-2": [
-    { id: 1,  pos: "POR", x: 50, y: 88 },
-    { id: 2,  pos: "LD",  x: 82, y: 72 },
-    { id: 3,  pos: "DEF", x: 62, y: 72 },
-    { id: 4,  pos: "DEF", x: 38, y: 72 },
-    { id: 5,  pos: "LI",  x: 18, y: 72 },
-    { id: 6,  pos: "MCD", x: 35, y: 56 },
-    { id: 7,  pos: "MCD", x: 65, y: 56 },
-    { id: 8,  pos: "EI",  x: 22, y: 38 },
-    { id: 9,  pos: "ED",  x: 78, y: 38 },
-    { id: 10, pos: "DC",  x: 35, y: 18 },
-    { id: 11, pos: "DC",  x: 65, y: 18 },
-  ],
-  "4-3-3 DF": [
-    { id: 1,  pos: "POR", x: 50, y: 88 },
-    { id: 2,  pos: "LD",  x: 82, y: 72 },
-    { id: 3,  pos: "DEF", x: 62, y: 72 },
-    { id: 4,  pos: "DEF", x: 38, y: 72 },
-    { id: 5,  pos: "LI",  x: 18, y: 72 },
-    { id: 6,  pos: "MCD", x: 50, y: 54 },
-    { id: 7,  pos: "MC",  x: 28, y: 46 },
-    { id: 8,  pos: "MC",  x: 72, y: 46 },
+    { id: 6,  pos: "MC",  x: 25, y: 50 },
+    { id: 7,  pos: "MC",  x: 50, y: 50 },
+    { id: 8,  pos: "MC",  x: 75, y: 50 },
     { id: 9,  pos: "EI",  x: 18, y: 20 },
-    { id: 10, pos: "DC",  x: 50, y: 16 },
+    { id: 10, pos: "DC",  x: 50, y: 18 },
     { id: 11, pos: "ED",  x: 82, y: 20 },
   ],
-  "4-3-3 OF": [
+  "3-5-2": [
     { id: 1,  pos: "POR", x: 50, y: 88 },
-    { id: 2,  pos: "LD",  x: 82, y: 72 },
-    { id: 3,  pos: "DEF", x: 62, y: 72 },
-    { id: 4,  pos: "DEF", x: 38, y: 72 },
-    { id: 5,  pos: "LI",  x: 18, y: 72 },
-    { id: 6,  pos: "MCO", x: 50, y: 54 },
-    { id: 7,  pos: "MC",  x: 28, y: 46 },
-    { id: 8,  pos: "MC",  x: 72, y: 46 },
-    { id: 9,  pos: "EI",  x: 18, y: 20 },
-    { id: 10, pos: "DC",  x: 50, y: 16 },
-    { id: 11, pos: "ED",  x: 82, y: 20 },
+    { id: 2,  pos: "DEF", x: 25, y: 72 },
+    { id: 3,  pos: "DEF", x: 50, y: 72 },
+    { id: 4,  pos: "DEF", x: 75, y: 72 },
+    { id: 5,  pos: "LD",  x: 90, y: 52 },
+    { id: 6,  pos: "MC",  x: 30, y: 50 },
+    { id: 7,  pos: "MC",  x: 50, y: 48 },
+    { id: 8,  pos: "MC",  x: 70, y: 50 },
+    { id: 9,  pos: "LI",  x: 10, y: 52 },
+    { id: 10, pos: "DC",  x: 35, y: 20 },
+    { id: 11, pos: "DC",  x: 65, y: 20 },
   ],
-  "5-2-1-2": [
+  "5-3-2": [
     { id: 1,  pos: "POR", x: 50, y: 88 },
     { id: 2,  pos: "LD",  x: 90, y: 68 },
     { id: 3,  pos: "DEF", x: 68, y: 72 },
     { id: 4,  pos: "DEF", x: 50, y: 74 },
     { id: 5,  pos: "DEF", x: 32, y: 72 },
     { id: 6,  pos: "LI",  x: 10, y: 68 },
-    { id: 7,  pos: "MC",  x: 32, y: 50 },
-    { id: 8,  pos: "MC",  x: 68, y: 50 },
-    { id: 9,  pos: "MCO", x: 50, y: 36 },
-    { id: 10, pos: "DC",  x: 32, y: 18 },
-    { id: 11, pos: "DC",  x: 68, y: 18 },
-  ],
-  "3-4-2-1": [
-    { id: 1,  pos: "POR", x: 50, y: 88 },
-    { id: 2,  pos: "DEF", x: 25, y: 74 },
-    { id: 3,  pos: "DEF", x: 50, y: 74 },
-    { id: 4,  pos: "DEF", x: 75, y: 74 },
-    { id: 5,  pos: "LD",  x: 85, y: 56 },
-    { id: 6,  pos: "MC",  x: 62, y: 54 },
-    { id: 7,  pos: "MC",  x: 38, y: 54 },
-    { id: 8,  pos: "LI",  x: 15, y: 56 },
-    { id: 9,  pos: "EI",  x: 28, y: 32 },
-    { id: 10, pos: "ED",  x: 72, y: 32 },
-    { id: 11, pos: "DC",  x: 50, y: 16 },
-  ],
-  "4-5-1": [
-    { id: 1,  pos: "POR", x: 50, y: 88 },
-    { id: 2,  pos: "LD",  x: 82, y: 72 },
-    { id: 3,  pos: "DEF", x: 62, y: 72 },
-    { id: 4,  pos: "DEF", x: 38, y: 72 },
-    { id: 5,  pos: "LI",  x: 18, y: 72 },
-    { id: 6,  pos: "EI",  x: 10, y: 50 },
-    { id: 7,  pos: "MC",  x: 30, y: 50 },
-    { id: 8,  pos: "MCD", x: 50, y: 52 },
-    { id: 9,  pos: "MC",  x: 70, y: 50 },
-    { id: 10, pos: "ED",  x: 90, y: 50 },
-    { id: 11, pos: "DC",  x: 50, y: 18 },
+    { id: 7,  pos: "MC",  x: 28, y: 50 },
+    { id: 8,  pos: "MC",  x: 50, y: 48 },
+    { id: 9,  pos: "MC",  x: 72, y: 50 },
+    { id: 10, pos: "DC",  x: 35, y: 20 },
+    { id: 11, pos: "DC",  x: 65, y: 20 },
   ],
 };
 
@@ -142,9 +74,6 @@ const posColor = {
   EI: "#7a3d9e", ED: "#7a3d9e", DC: "#993C1D",
 };
 
-// ─────────────────────────────────────────────
-// PLANTILLAS LALIGA 24/25
-// ─────────────────────────────────────────────
 const RIVAL_TEAMS = [
   { name: "Real Madrid", squad: {
     DC:[{n:"Mbappé",s:96},{n:"Benzema",s:91}], EI:[{n:"Vinicius",s:94}], ED:[{n:"Rodrygo",s:86}],
@@ -259,12 +188,9 @@ const RIVAL_TEAMS = [
     MCO:[{n:"Raúl Moro",s:69}], MC:[{n:"Hervías",s:66},{n:"Meseguer",s:65}], MCD:[{n:"Roque Mesa",s:65},{n:"Anuar",s:64}],
     DEF:[{n:"Joaquín Fernández",s:68},{n:"Boyomo",s:66},{n:"Nigmatullin",s:65},{n:"Rosa",s:64}],
     LD:[{n:"Víctor García",s:65}], LI:[{n:"Rosa",s:64}], POR:[{n:"Hein",s:71},{n:"Masip",s:68}]
-  }}
+  }},
 ];
 
-// ─────────────────────────────────────────────
-// MOTOR DE CÁLCULO
-// ─────────────────────────────────────────────
 function avg(arr) { return arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 65; }
 function norm(v)  { return Math.max(0, Math.min(1, (v - 50) / 50)); }
 
@@ -289,9 +215,10 @@ function calcSquadStrength(squad) {
   return { atk, def: defFinal, scorers };
 }
 
-// Calcula la fuerza del 11 inicial seleccionado por el jugador
 function calcLineupStrength(lineup) {
-  const byPos = pos => lineup.filter(p => p && p.pos === pos).map(p => p.shooting || 65);
+
+  if (!lineup) lineup = [];
+  const byPos    = pos => lineup.filter(p => p && p.pos === pos).map(p => p.shooting || 65);
   const defByPos = pos => lineup.filter(p => p && p.pos === pos).map(p => p.def || 60);
   const avgDC  = avg(byPos("DC")),  avgEI  = avg(byPos("EI")),  avgED  = avg(byPos("ED"));
   const avgMCO = avg(byPos("MCO")), avgMC  = avg(byPos("MC")),  avgMCD = avg(byPos("MCD"));
@@ -306,9 +233,9 @@ function calcLineupStrength(lineup) {
 }
 
 function applyTactic(atk, def, tactic) {
-  if (tactic === "ofensivo")        return { atk: atk * 1.10, def: def * 0.95 };
-  if (tactic === "defensivo")       return { atk: atk * 0.95, def: def * 1.10 };
-  if (tactic === "presión total")   return { atk: atk * 1.08, def: def * 0.88 };
+  if (tactic === "ofensivo")      return { atk: atk * 1.10, def: def * 0.95 };
+  if (tactic === "defensivo")     return { atk: atk * 0.95, def: def * 1.10 };
+  if (tactic === "presión total") return { atk: atk * 1.08, def: def * 0.88 };
   return { atk, def };
 }
 
@@ -319,7 +246,6 @@ function goalProb(atkN, defN, total) {
   return Math.max(0.006, Math.min(0.09, p));
 }
 
-// Goleador del 11 inicial seleccionado
 function pickLineupScorer(lineup) {
   const pool    = lineup.filter(p => p && p.pos !== "POR");
   const weights = { DC:3, EI:1.5, ED:1.5, MCO:1, MC:0.6, MCD:0.3, DEF:0.2, LD:0.15, LI:0.15 };
@@ -336,7 +262,6 @@ function pickRivalScorer(scorers) {
   return scorers[scorers.length - 1].n;
 }
 
-// Tarjeta del 11 inicial
 function pickLineupCard(lineup) {
   const pool = lineup.filter(p => p && p.pos !== "POR");
   return pool[Math.floor(Math.random() * pool.length)]?.name || "Jugador";
@@ -346,20 +271,9 @@ function pickRivalCard(scorers) {
   return scorers[Math.floor(Math.random() * scorers.length)]?.n || "Jugador";
 }
 
-// ─────────────────────────────────────────────
-// COMPONENTE PRINCIPAL
-// ─────────────────────────────────────────────
-export default function MatchEngine({ club, setClub, season, calendar, setCalendar, onNextSeason, formation, mentality, externalPlayers, t, navigate }) {
+export default function MatchEngine({ club, setClub, season, calendar, setCalendar, onNextSeason, formation, mentality, lineup, externalPlayers, t, navigate }) {
 
   const MATCH_INTERVAL_MS = 333;
-
-  const formationSlots = formations[formation] || formations["4-2-3-1"];
-  const squadPlayers   = externalPlayers || [];
-
-  // ── Estado de fase: lineup | playing | finished
-  const [phase,        setPhase]        = useState("lineup");
-  const [lineup,       setLineup]       = useState(Array(11).fill(null));
-  const [selectingSlot,setSelectingSlot]= useState(null);
 
   const [tactic,       setTacticState]  = useState(mentality || "equilibrado");
   const [matchState,   setMatchState]   = useState("idle");
@@ -373,51 +287,23 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
   const [jornada,      setJornada]      = useState(1);
   const [yellowCards,  setYellowCards]  = useState({});
 
-  const intervalRef    = useRef(null);
-  const goalRefH       = useRef(0);
-  const goalRefA       = useRef(0);
-  const minuteRef      = useRef(0);
-  const totalGoalRef   = useRef(0);
-  const yellowRef      = useRef({});
-  const tacticRef      = useRef(tactic);
-  const lineupRef      = useRef(lineup);
+  const intervalRef  = useRef(null);
+  const goalRefH     = useRef(0);
+  const goalRefA     = useRef(0);
+  const minuteRef    = useRef(0);
+  const totalGoalRef = useRef(0);
+  const yellowRef    = useRef({});
+  const tacticRef    = useRef(tactic);
+  const lineupRef = useRef(lineup || []);
 
   useEffect(() => { tacticRef.current = tactic; }, [tactic]);
-  useEffect(() => { lineupRef.current = lineup; }, [lineup]);
+  useEffect(() => { lineupRef.current = lineup || []; }, [lineup]);
   useEffect(() => () => clearInterval(intervalRef.current), []);
 
-  function handleTactic(t) {
-    setTacticState(t);
-    tacticRef.current = t;
-  }
+  function handleTactic(t) { setTacticState(t); tacticRef.current = t; }
 
-  // ── Selección de 11
-  function handleSlotClick(slotIndex) {
-    if (phase !== "lineup") return;
-    setSelectingSlot(slotIndex);
-  }
+  const lineupComplete = (lineup || []).filter(Boolean).length === 11;
 
-  function handlePlayerSelect(player) {
-    if (selectingSlot === null) return;
-    const newLineup = [...lineup];
-    const existingIndex = newLineup.findIndex(p => p && p.id === player.id);
-    if (existingIndex !== -1) newLineup[existingIndex] = null;
-    newLineup[selectingSlot] = player;
-    setLineup(newLineup);
-    lineupRef.current = newLineup;
-    setSelectingSlot(null);
-  }
-
-  function handleRemovePlayer(slotIndex) {
-    const newLineup = [...lineup];
-    newLineup[slotIndex] = null;
-    setLineup(newLineup);
-    lineupRef.current = newLineup;
-  }
-
-  const lineupComplete = lineup.filter(Boolean).length === 11;
-
-  // ── Iniciar partido
   function initMatch() {
     const r    = RIVAL_TEAMS[Math.floor(Math.random() * RIVAL_TEAMS.length)];
     const rStr = calcSquadStrength(r.squad);
@@ -433,7 +319,7 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
         hg: 0, ag: 0,
         hAtk: norm(hs.atk), hDef: norm(hs.def),
         aAtk: norm(as.atk), aDef: norm(as.def),
-        min: 0, done: false, tot: 0
+        min: 0, done: false, tot: 0,
       });
     }
     setOtherMatches(others);
@@ -441,7 +327,10 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
   }
 
   function startMatch() {
-    if (!lineupComplete) return;
+
+    if (!lineupComplete) {
+      console.log("⚠️ Alineación incompleta (se permite jugar)");
+    }
     goalRefH.current     = 0;
     goalRefA.current     = 0;
     minuteRef.current    = 0;
@@ -454,7 +343,6 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
     setEvents([]);
     setYellowCards({});
     setMatchState("playing");
-    setPhase("playing");
 
     const { r, rStr, others } = initMatch();
     const othersRef = others.map(o => ({ ...o }));
@@ -464,8 +352,15 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
       const min = minuteRef.current;
       setMinute(min);
 
-      // Fuerza basada en el 11 seleccionado
-      const currentLineup = lineupRef.current;
+      let currentLineup = lineupRef.current;
+
+      if (!currentLineup || currentLineup.filter(Boolean).length < 11) {
+        // usa los primeros 11 jugadores automáticamente
+        currentLineup = initialPlayers.slice(0, 11).map((p, i) => ({
+          ...p,
+          pos: formations["4-4-2"][i].pos
+        }));
+      }
       const lineupStr     = calcLineupStrength(currentLineup);
       const tac           = tacticRef.current;
       const tacApplied    = applyTactic(lineupStr.atk, lineupStr.def, tac);
@@ -476,22 +371,30 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
       const aDef          = norm(rStr.def * (1 + (Math.random() * 0.08 - 0.04)));
       const tot           = totalGoalRef.current;
       const newEvents     = [];
+      const redsHome = events.filter(e => e.side === "home" && e.type === "red").length;
+const redsAway = events.filter(e => e.side === "away" && e.type === "red").length;
 
-      // Goles
-      if (Math.random() < goalProb(hAtk, aDef, tot)) {
+const redPenaltyHome = 1 - (redsHome * 0.15);
+const redPenaltyAway = 1 - (redsAway * 0.15);
+
+const finalHAtk = hAtk * redPenaltyHome;
+const finalHDef = hDef * redPenaltyHome;
+const finalAAtk = aAtk * redPenaltyAway;
+const finalADef = aDef * redPenaltyAway;
+
+      if (Math.random() < goalProb(finalHAtk, finalADef, tot)) {
         goalRefH.current++;
         totalGoalRef.current++;
         setHomeGoals(goalRefH.current);
         newEvents.push({ min, type: "goal", player: pickLineupScorer(currentLineup), side: "home" });
       }
-      if (Math.random() < goalProb(aAtk, hDef, tot)) {
+      if (Math.random() < goalProb(finalAAtk, finalHDef, tot)) {
         goalRefA.current++;
         totalGoalRef.current++;
         setAwayGoals(goalRefA.current);
         newEvents.push({ min, type: "goal", player: pickRivalScorer(rStr.scorers), side: "away" });
       }
 
-      // Tarjetas — doble amarilla = roja automática
       if (Math.random() < 0.016) {
         const side   = Math.random() < 0.5 ? "home" : "away";
         const player = side === "home" ? pickLineupCard(currentLineup) : pickRivalCard(rStr.scorers);
@@ -514,7 +417,6 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
 
       if (newEvents.length > 0) setEvents(prev => [...newEvents.reverse(), ...prev]);
 
-      // Otros partidos
       othersRef.forEach(m => {
         if (!m.done) {
           m.min = min;
@@ -528,55 +430,51 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
       if (min >= 90) {
         clearInterval(intervalRef.current);
         setMatchState("finished");
-        setPhase("finished");
         setJornada(j => j + 1);
       }
     }, MATCH_INTERVAL_MS);
   }
 
   function resetMatch() {
-    setPhase("lineup");
-    setLineup(Array(11).fill(null));
-    lineupRef.current = Array(11).fill(null);
-    setSelectingSlot(null);
     setEvents([]);
     setMinute(0);
     setHomeGoals(0);
     setAwayGoals(0);
     setMatchState("idle");
+    setRival(null);
+    setOtherMatches([]);
   }
 
-  // ── ESTILOS
   const s = {
-    wrap:        { background:"#0a1628", minHeight:"100vh", padding:12, color:"#e8f4ff", maxWidth:390, margin:"0 auto" },
-    topBar:      { fontSize:11, color:"#5a8ab0", marginBottom:2 },
-    card:        { background:"#112240", borderRadius:12, border:"0.5px solid #1e3a5f", padding:14, marginBottom:10 },
-    clockRow:    { display:"flex", justifyContent:"flex-end", marginBottom:6 },
-    teamsRow:    { display:"flex", alignItems:"center", justifyContent:"space-between", gap:8, marginBottom:8 },
-    teamHome:    { fontSize:15, fontWeight:500, color:"#f1c40f", flex:1, lineHeight:1.3 },
-    teamAway:    { fontSize:15, fontWeight:500, color:"#e8f4ff", flex:1, textAlign:"right", lineHeight:1.3 },
-    score:       { fontSize:30, fontWeight:700, color:"#e8f4ff", minWidth:64, textAlign:"center" },
-    eventsGrid:  { display:"grid", gridTemplateColumns:"1fr 1fr", gap:4, minHeight:44, marginBottom:4 },
-    eventHome:   { display:"flex", alignItems:"center", gap:4, fontSize:10, color:"#b0c8e8", padding:"2px 0" },
-    eventAway:   { display:"flex", flexDirection:"row-reverse", alignItems:"center", gap:4, fontSize:10, color:"#b0c8e8", padding:"2px 0" },
-    goalIcon:    { width:14, height:14, borderRadius:"50%", background:"#1D9E75", display:"flex", alignItems:"center", justifyContent:"center", fontSize:8, flexShrink:0, color:"#fff" },
-    yellowIcon:  { width:10, height:13, borderRadius:2, background:"#f1c40f", flexShrink:0 },
-    redIcon:     { width:10, height:13, borderRadius:2, background:"#e74c3c", flexShrink:0 },
-    tacRow:      { display:"flex", gap:6, marginBottom:8 },
-    tacBtnBase:  { flex:1, border:"0.5px solid #1e3a5f", color:"#5a8ab0", padding:"6px 0", borderRadius:8, fontSize:11, cursor:"pointer", background:"#0d1f3c" },
-    tacBtnActive:{ flex:1, border:"1.5px solid #1D9E75", color:"#1D9E75", padding:"6px 0", borderRadius:8, fontSize:11, cursor:"pointer", background:"#0a2a1e" },
-    btn:         { width:"100%", background:"#1D9E75", border:"none", color:"#fff", padding:"10px 0", borderRadius:10, fontSize:13, fontWeight:500, cursor:"pointer", marginBottom:8 },
-    btnDisabled: { width:"100%", background:"#1e3a5f", border:"none", color:"#5a8ab0", padding:"10px 0", borderRadius:10, fontSize:13, cursor:"not-allowed", marginBottom:8 },
-    liveSection: { background:"#112240", borderRadius:12, border:"0.5px solid #1e3a5f", padding:12 },
-    liveTitle:   { fontSize:11, color:"#1D9E75", textTransform:"uppercase", letterSpacing:1, marginBottom:8, display:"flex", alignItems:"center", gap:6 },
-    liveDot:     { width:7, height:7, borderRadius:"50%", background:"#1D9E75" },
-    liveDotOff:  { width:7, height:7, borderRadius:"50%", background:"#5a8ab0" },
-    matchRow:    { display:"flex", justifyContent:"space-between", alignItems:"center", padding:"4px 0", borderBottom:"0.5px solid #1e3a5f" },
-    mTeam:       { fontSize:11, color:"#b0c8e8", flex:1 },
-    mTeamR:      { fontSize:11, color:"#b0c8e8", flex:1, textAlign:"right" },
-    mScore:      { fontSize:12, fontWeight:500, color:"#e8f4ff", minWidth:36, textAlign:"center" },
-    finMsg:      { fontSize:13, textAlign:"center", marginTop:6, fontWeight:500 },
-    backBtn:     { width:"100%", background:"#0d1f3c", border:"0.5px solid #1e3a5f", color:"#5a8ab0", padding:"10px 0", borderRadius:10, fontSize:13, cursor:"pointer", marginBottom:8 },
+    wrap:         { background:"#0a1628", minHeight:"100vh", padding:12, color:"#e8f4ff", maxWidth:390, margin:"0 auto" },
+    topBar:       { fontSize:11, color:"#5a8ab0", marginBottom:2 },
+    card:         { background:"#112240", borderRadius:12, border:"0.5px solid #1e3a5f", padding:14, marginBottom:10 },
+    clockRow: { display:"flex", justifyContent:"flex-end", marginBottom:2 },
+    teamsRow:     { display:"flex", alignItems:"center", justifyContent:"space-between", gap:8, marginBottom:8 },
+    teamHome:     { fontSize:15, fontWeight:500, color:"#f1c40f", flex:1, lineHeight:1.3 },
+    teamAway:     { fontSize:15, fontWeight:500, color:"#e8f4ff", flex:1, textAlign:"right", lineHeight:1.3 },
+    score:        { fontSize:30, fontWeight:700, color:"#e8f4ff", minWidth:64, textAlign:"center" },
+    eventsGrid:   { display:"grid", gridTemplateColumns:"1fr 1fr", gap:4, minHeight:44, marginBottom:4 },
+    eventHome:    { display:"flex", alignItems:"center", gap:4, fontSize:10, color:"#b0c8e8", padding:"2px 0" },
+    eventAway:    { display:"flex", flexDirection:"row-reverse", alignItems:"center", gap:4, fontSize:10, color:"#b0c8e8", padding:"2px 0" },
+    goalIcon:     { width:14, height:14, borderRadius:"50%", background:"#1D9E75", display:"flex", alignItems:"center", justifyContent:"center", fontSize:8, flexShrink:0, color:"#fff" },
+    yellowIcon:   { width:10, height:13, borderRadius:2, background:"#f1c40f", flexShrink:0 },
+    redIcon:      { width:10, height:13, borderRadius:2, background:"#e74c3c", flexShrink:0 },
+    tacRow:       { display:"flex", gap:6, marginBottom:8 },
+    tacBtnBase:   { flex:1, border:"0.5px solid #1e3a5f", color:"#5a8ab0", padding:"6px 0", borderRadius:8, fontSize:11, cursor:"pointer", background:"#0d1f3c" },
+    tacBtnActive: { flex:1, border:"1.5px solid #1D9E75", color:"#1D9E75", padding:"6px 0", borderRadius:8, fontSize:11, cursor:"pointer", background:"#0a2a1e" },
+    btn:          { width:"100%", background:"#1D9E75", border:"none", color:"#fff", padding:"10px 0", borderRadius:10, fontSize:13, fontWeight:500, cursor:"pointer", marginBottom:8 },
+    btnDisabled:  { width:"100%", background:"#1e3a5f", border:"none", color:"#5a8ab0", padding:"10px 0", borderRadius:10, fontSize:13, cursor:"not-allowed", marginBottom:8 },
+    backBtn:      { width:"100%", background:"#0d1f3c", border:"0.5px solid #1e3a5f", color:"#5a8ab0", padding:"10px 0", borderRadius:10, fontSize:13, cursor:"pointer", marginBottom:8 },
+    liveSection:  { background:"#112240", borderRadius:12, border:"0.5px solid #1e3a5f", padding:12 },
+    liveTitle:    { fontSize:11, color:"#1D9E75", textTransform:"uppercase", letterSpacing:1, marginBottom:8, display:"flex", alignItems:"center", gap:6 },
+    liveDot:      { width:7, height:7, borderRadius:"50%", background:"#1D9E75" },
+    liveDotOff:   { width:7, height:7, borderRadius:"50%", background:"#5a8ab0" },
+    matchRow:     { display:"flex", justifyContent:"space-between", alignItems:"center", padding:"4px 0", borderBottom:"0.5px solid #1e3a5f" },
+    mTeam:        { fontSize:11, color:"#b0c8e8", flex:1 },
+    mTeamR:       { fontSize:11, color:"#b0c8e8", flex:1, textAlign:"right" },
+    mScore:       { fontSize:12, fontWeight:500, color:"#e8f4ff", minWidth:36, textAlign:"center" },
+    finMsg:       { fontSize:13, textAlign:"center", marginTop:6, fontWeight:500 },
   };
 
   const progress = (minute / 90) * 113;
@@ -587,88 +485,25 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
     : { text:`Empate ${homeGoals}-${awayGoals}`, color:"#f1c40f" }
     : null;
 
-  // ─────────────────────────────────────────────
-  // PANTALLA DE SELECCIÓN DE 11
-  // ─────────────────────────────────────────────
-  if (phase === "lineup") {
-    return (
-      <div style={{ flex:1, overflowY:"auto", background:"#0a1628" }}>
-        <div style={{ background:"#0d1f3c", padding:"16px 20px", borderBottom:"0.5px solid #1e3a5f", display:"flex", alignItems:"center", gap:12 }}>
-          <button onClick={() => navigate("home")} style={{ background:"none", border:"none", color:"#5a8ab0", fontSize:20, cursor:"pointer", padding:0 }}>←</button>
-          <h1 style={{ fontSize:18, fontWeight:500, color:"#e8f4ff", margin:0 }}>Seleccionar 11</h1>
-          <span style={{ marginLeft:"auto", fontSize:12, color: lineupComplete ? "#1D9E75" : "#5a8ab0" }}>
-            {lineup.filter(Boolean).length}/11
-          </span>
-        </div>
-
-        {/* Campo con posiciones */}
-        <div style={{ position:"relative", width:"100%", paddingBottom:"130%", background:"#0a3d1a", overflow:"hidden" }}>
-          <div style={{ position:"absolute", inset:0 }}>
-            <div style={{ position:"absolute", top:"50%", left:"5%", right:"5%", height:"0.5px", background:"rgba(255,255,255,0.15)" }} />
-            <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:"20%", paddingBottom:"20%", borderRadius:"50%", border:"0.5px solid rgba(255,255,255,0.15)" }} />
-            <div style={{ position:"absolute", bottom:"5%", left:"25%", right:"25%", height:"18%", border:"0.5px solid rgba(255,255,255,0.15)", borderBottom:"none" }} />
-            <div style={{ position:"absolute", top:"5%", left:"25%", right:"25%", height:"18%", border:"0.5px solid rgba(255,255,255,0.15)", borderTop:"none" }} />
-            {formationSlots.map((slot, i) => {
-              const player = lineup[i];
-              return (
-                <div key={slot.id} onClick={() => player ? handleRemovePlayer(i) : handleSlotClick(i)}
-                  style={{ position:"absolute", left:slot.x+"%", top:slot.y+"%", transform:"translate(-50%,-50%)", display:"flex", flexDirection:"column", alignItems:"center", gap:2, cursor:"pointer" }}>
-                  <div style={{ width:34, height:34, borderRadius:"50%", background: player ? posColor[slot.pos] : "rgba(255,255,255,0.1)", border: player ? "2px solid rgba(255,255,255,0.4)" : "2px dashed rgba(255,255,255,0.3)", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                    {player
-                      ? <span style={{ fontSize:7, color:"#fff", fontWeight:500, textAlign:"center", padding:"0 2px", lineHeight:1.2 }}>{player.name.split(" ")[0]}</span>
-                      : <span style={{ fontSize:9, color:"rgba(255,255,255,0.4)" }}>+</span>
-                    }
-                  </div>
-                  <span style={{ fontSize:8, color: player ? "#1D9E75" : "rgba(255,255,255,0.3)", background:"rgba(0,0,0,0.5)", padding:"1px 3px", borderRadius:2 }}>{slot.pos}</span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Lista de jugadores al seleccionar slot */}
-        {selectingSlot !== null && (
-          <div style={{ padding:"12px 16px", background:"#0d1f3c", borderTop:"0.5px solid #1e3a5f" }}>
-            <p style={{ fontSize:11, color:"#5a8ab0", margin:"0 0 8px", textTransform:"uppercase", letterSpacing:"0.08em" }}>
-              Elegir jugador — {formationSlots[selectingSlot]?.pos}
-            </p>
-            <div style={{ display:"flex", flexDirection:"column", gap:6, maxHeight:200, overflowY:"auto" }}>
-              {squadPlayers.filter(p => !lineup.some((l, i) => l && l.id === p.id && i !== selectingSlot)).map(p => (
-                <div key={p.id} onClick={() => handlePlayerSelect(p)}
-                  style={{ display:"flex", alignItems:"center", gap:10, background:"#112240", borderRadius:8, padding:"8px 12px", cursor:"pointer", border:"0.5px solid #1e3a5f" }}>
-                  <span style={{ fontSize:10, background: posColor[p.pos] || "#333", color:"#fff", padding:"2px 6px", borderRadius:4, minWidth:28, textAlign:"center" }}>{p.pos}</span>
-                  <span style={{ fontSize:13, color:"#e8f4ff", flex:1 }}>{p.name}</span>
-                  <span style={{ fontSize:14, fontWeight:500, color:"#1D9E75" }}>{p.overall || p.shooting || "-"}</span>
-                </div>
-              ))}
-            </div>
-            <button onClick={() => setSelectingSlot(null)} style={{ marginTop:8, width:"100%", background:"none", border:"0.5px solid #1e3a5f", color:"#5a8ab0", padding:"8px 0", borderRadius:8, cursor:"pointer", fontSize:12 }}>Cancelar</button>
-          </div>
-        )}
-
-        <div style={{ padding:16 }}>
-          <button onClick={startMatch} disabled={!lineupComplete}
-            style={{ width:"100%", background: lineupComplete ? "#1D9E75" : "#1e3a5f", border:"none", color: lineupComplete ? "#fff" : "#5a8ab0", padding:"12px 0", borderRadius:10, fontSize:14, fontWeight:500, cursor: lineupComplete ? "pointer" : "not-allowed" }}>
-            {lineupComplete ? "Jugar partido" : `Faltan ${11 - lineup.filter(Boolean).length} jugadores`}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  // ─────────────────────────────────────────────
-  // PANTALLA DE PARTIDO EN VIVO
-  // ─────────────────────────────────────────────
   return (
     <div style={s.wrap}>
       <div style={s.topBar}>
         {club?.division === 1 ? "Primera División" : club?.division === 2 ? "Segunda División" : "Tercera División"} · Jornada {jornada}
       </div>
 
-      {/* Tarjeta del partido */}
       <div style={s.card}>
+      {!lineupComplete && (
+  <div style={{
+    fontSize: 11,
+    color: "#f1c40f",
+    textAlign: "center",
+    marginBottom: 6
+  }}>
+    ⚠️ Alineación incompleta
+  </div>
+)}
         <div style={s.clockRow}>
-          <div style={{ width:44, height:44, position:"relative", display:"flex", alignItems:"center", justifyContent:"center" }}>
+          <div style={{ width:36, height:36, position:"relative", display:"flex", alignItems:"center", justifyContent:"center" }}>
             <svg viewBox="0 0 44 44" width="44" height="44" style={{ position:"absolute", top:0, left:0 }}>
               <circle cx="22" cy="22" r="18" fill="none" stroke="#1e3a5f" strokeWidth="3"/>
               <circle cx="22" cy="22" r="18" fill="none" stroke="#1D9E75" strokeWidth="3"
@@ -679,7 +514,9 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
         </div>
 
         <div style={s.teamsRow}>
-          <span style={s.teamHome}>{club?.name || "Tu equipo"}</span>
+        <span style={s.teamHome}>
+  {club && club.name ? club.name : "UD Las Palmas"}
+</span>
           <span style={s.score}>{homeGoals} - {awayGoals}</span>
           <span style={s.teamAway}>{rival?.name || "-"}</span>
         </div>
@@ -712,7 +549,6 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
         {result && <div style={{ ...s.finMsg, color: result.color }}>{result.text}</div>}
       </div>
 
-      {/* Tácticas en vivo */}
       <div style={s.tacRow}>
         {["ofensivo","equilibrado","defensivo"].map(t => (
           <button key={t} onClick={() => handleTactic(t)}
@@ -722,7 +558,9 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
         ))}
       </div>
 
-      {/* Botones */}
+      {matchState === "idle" && (
+        <button style={s.btn} onClick={startMatch}>Jugar partido</button>
+      )}
       {matchState === "playing" && (
         <button style={s.btnDisabled} disabled>Partido en curso...</button>
       )}
@@ -733,7 +571,6 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
         </>
       )}
 
-      {/* Resultados en vivo */}
       <div style={s.liveSection}>
         <div style={s.liveTitle}>
           <div style={matchState === "playing" ? s.liveDot : s.liveDotOff}/>
