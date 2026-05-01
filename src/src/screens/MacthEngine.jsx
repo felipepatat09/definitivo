@@ -1,6 +1,148 @@
 import React, { useState, useEffect, useRef } from "react";
 
 // ─────────────────────────────────────────────
+// FORMACIONES
+// ─────────────────────────────────────────────
+const formations = {
+  "4-2-3-1": [
+    { id: 1,  pos: "POR", x: 50, y: 88 },
+    { id: 2,  pos: "LD",  x: 82, y: 72 },
+    { id: 3,  pos: "DEF", x: 62, y: 72 },
+    { id: 4,  pos: "DEF", x: 38, y: 72 },
+    { id: 5,  pos: "LI",  x: 18, y: 72 },
+    { id: 6,  pos: "MCD", x: 35, y: 56 },
+    { id: 7,  pos: "MCD", x: 65, y: 56 },
+    { id: 8,  pos: "EI",  x: 15, y: 38 },
+    { id: 9,  pos: "MCO", x: 50, y: 36 },
+    { id: 10, pos: "ED",  x: 85, y: 38 },
+    { id: 11, pos: "DC",  x: 50, y: 16 },
+  ],
+  "4-3-2-1": [
+    { id: 1,  pos: "POR", x: 50, y: 88 },
+    { id: 2,  pos: "LD",  x: 82, y: 72 },
+    { id: 3,  pos: "DEF", x: 62, y: 72 },
+    { id: 4,  pos: "DEF", x: 38, y: 72 },
+    { id: 5,  pos: "LI",  x: 18, y: 72 },
+    { id: 6,  pos: "MCD", x: 50, y: 57 },
+    { id: 7,  pos: "MC",  x: 28, y: 50 },
+    { id: 8,  pos: "MC",  x: 72, y: 50 },
+    { id: 9,  pos: "MCO", x: 32, y: 32 },
+    { id: 10, pos: "MCO", x: 68, y: 32 },
+    { id: 11, pos: "DC",  x: 50, y: 16 },
+  ],
+  "4-4-2": [
+    { id: 1,  pos: "POR", x: 50, y: 88 },
+    { id: 2,  pos: "LD",  x: 82, y: 72 },
+    { id: 3,  pos: "DEF", x: 62, y: 72 },
+    { id: 4,  pos: "DEF", x: 38, y: 72 },
+    { id: 5,  pos: "LI",  x: 18, y: 72 },
+    { id: 6,  pos: "EI",  x: 15, y: 50 },
+    { id: 7,  pos: "MC",  x: 38, y: 50 },
+    { id: 8,  pos: "MC",  x: 62, y: 50 },
+    { id: 9,  pos: "ED",  x: 85, y: 50 },
+    { id: 10, pos: "DC",  x: 35, y: 20 },
+    { id: 11, pos: "DC",  x: 65, y: 20 },
+  ],
+  "4-1-2-1-2": [
+    { id: 1,  pos: "POR", x: 50, y: 88 },
+    { id: 2,  pos: "LD",  x: 82, y: 72 },
+    { id: 3,  pos: "DEF", x: 62, y: 72 },
+    { id: 4,  pos: "DEF", x: 38, y: 72 },
+    { id: 5,  pos: "LI",  x: 18, y: 72 },
+    { id: 6,  pos: "MCD", x: 50, y: 58 },
+    { id: 7,  pos: "MC",  x: 28, y: 46 },
+    { id: 8,  pos: "MC",  x: 72, y: 46 },
+    { id: 9,  pos: "MCO", x: 50, y: 34 },
+    { id: 10, pos: "DC",  x: 32, y: 18 },
+    { id: 11, pos: "DC",  x: 68, y: 18 },
+  ],
+  "4-2-2-2": [
+    { id: 1,  pos: "POR", x: 50, y: 88 },
+    { id: 2,  pos: "LD",  x: 82, y: 72 },
+    { id: 3,  pos: "DEF", x: 62, y: 72 },
+    { id: 4,  pos: "DEF", x: 38, y: 72 },
+    { id: 5,  pos: "LI",  x: 18, y: 72 },
+    { id: 6,  pos: "MCD", x: 35, y: 56 },
+    { id: 7,  pos: "MCD", x: 65, y: 56 },
+    { id: 8,  pos: "EI",  x: 22, y: 38 },
+    { id: 9,  pos: "ED",  x: 78, y: 38 },
+    { id: 10, pos: "DC",  x: 35, y: 18 },
+    { id: 11, pos: "DC",  x: 65, y: 18 },
+  ],
+  "4-3-3 DF": [
+    { id: 1,  pos: "POR", x: 50, y: 88 },
+    { id: 2,  pos: "LD",  x: 82, y: 72 },
+    { id: 3,  pos: "DEF", x: 62, y: 72 },
+    { id: 4,  pos: "DEF", x: 38, y: 72 },
+    { id: 5,  pos: "LI",  x: 18, y: 72 },
+    { id: 6,  pos: "MCD", x: 50, y: 54 },
+    { id: 7,  pos: "MC",  x: 28, y: 46 },
+    { id: 8,  pos: "MC",  x: 72, y: 46 },
+    { id: 9,  pos: "EI",  x: 18, y: 20 },
+    { id: 10, pos: "DC",  x: 50, y: 16 },
+    { id: 11, pos: "ED",  x: 82, y: 20 },
+  ],
+  "4-3-3 OF": [
+    { id: 1,  pos: "POR", x: 50, y: 88 },
+    { id: 2,  pos: "LD",  x: 82, y: 72 },
+    { id: 3,  pos: "DEF", x: 62, y: 72 },
+    { id: 4,  pos: "DEF", x: 38, y: 72 },
+    { id: 5,  pos: "LI",  x: 18, y: 72 },
+    { id: 6,  pos: "MCO", x: 50, y: 54 },
+    { id: 7,  pos: "MC",  x: 28, y: 46 },
+    { id: 8,  pos: "MC",  x: 72, y: 46 },
+    { id: 9,  pos: "EI",  x: 18, y: 20 },
+    { id: 10, pos: "DC",  x: 50, y: 16 },
+    { id: 11, pos: "ED",  x: 82, y: 20 },
+  ],
+  "5-2-1-2": [
+    { id: 1,  pos: "POR", x: 50, y: 88 },
+    { id: 2,  pos: "LD",  x: 90, y: 68 },
+    { id: 3,  pos: "DEF", x: 68, y: 72 },
+    { id: 4,  pos: "DEF", x: 50, y: 74 },
+    { id: 5,  pos: "DEF", x: 32, y: 72 },
+    { id: 6,  pos: "LI",  x: 10, y: 68 },
+    { id: 7,  pos: "MC",  x: 32, y: 50 },
+    { id: 8,  pos: "MC",  x: 68, y: 50 },
+    { id: 9,  pos: "MCO", x: 50, y: 36 },
+    { id: 10, pos: "DC",  x: 32, y: 18 },
+    { id: 11, pos: "DC",  x: 68, y: 18 },
+  ],
+  "3-4-2-1": [
+    { id: 1,  pos: "POR", x: 50, y: 88 },
+    { id: 2,  pos: "DEF", x: 25, y: 74 },
+    { id: 3,  pos: "DEF", x: 50, y: 74 },
+    { id: 4,  pos: "DEF", x: 75, y: 74 },
+    { id: 5,  pos: "LD",  x: 85, y: 56 },
+    { id: 6,  pos: "MC",  x: 62, y: 54 },
+    { id: 7,  pos: "MC",  x: 38, y: 54 },
+    { id: 8,  pos: "LI",  x: 15, y: 56 },
+    { id: 9,  pos: "EI",  x: 28, y: 32 },
+    { id: 10, pos: "ED",  x: 72, y: 32 },
+    { id: 11, pos: "DC",  x: 50, y: 16 },
+  ],
+  "4-5-1": [
+    { id: 1,  pos: "POR", x: 50, y: 88 },
+    { id: 2,  pos: "LD",  x: 82, y: 72 },
+    { id: 3,  pos: "DEF", x: 62, y: 72 },
+    { id: 4,  pos: "DEF", x: 38, y: 72 },
+    { id: 5,  pos: "LI",  x: 18, y: 72 },
+    { id: 6,  pos: "EI",  x: 10, y: 50 },
+    { id: 7,  pos: "MC",  x: 30, y: 50 },
+    { id: 8,  pos: "MCD", x: 50, y: 52 },
+    { id: 9,  pos: "MC",  x: 70, y: 50 },
+    { id: 10, pos: "ED",  x: 90, y: 50 },
+    { id: 11, pos: "DC",  x: 50, y: 18 },
+  ],
+};
+
+const posColor = {
+  POR: "#854F0B", DEF: "#185FA5", LD: "#1a5fa5", LI: "#1a5fa5",
+  MCD: "#0a6e4a", MC: "#0F6E56", MCO: "#0e8a5f",
+  EI: "#7a3d9e", ED: "#7a3d9e", DC: "#993C1D",
+};
+
+// ─────────────────────────────────────────────
 // PLANTILLAS LALIGA 24/25
 // ─────────────────────────────────────────────
 const RIVAL_TEAMS = [
@@ -121,37 +263,6 @@ const RIVAL_TEAMS = [
 ];
 
 // ─────────────────────────────────────────────
-// PLANTILLA DEL JUGADOR — UD Las Palmas
-// ─────────────────────────────────────────────
-const MY_SQUAD = [
-  { name:"Carlos Ruiz",    pos:"POR", shooting:0,  isGK:true, gkStat:75, def:75 },
-  { name:"Marcos Gil",     pos:"DEF", shooting:30, def:78, phys:74 },
-  { name:"David Sanz",     pos:"DEF", shooting:25, def:75, phys:71 },
-  { name:"Luis Vera",      pos:"DEF", shooting:35, def:76, phys:73 },
-  { name:"Álvaro Méndez",  pos:"DEF", shooting:28, def:72, phys:70 },
-  { name:"Rubén Castro",   pos:"LD",  shooting:45, def:72, phys:70 },
-  { name:"Iván Molina",    pos:"LD",  shooting:40, def:70, phys:68 },
-  { name:"Fernando Díaz",  pos:"LI",  shooting:46, def:71, phys:69 },
-  { name:"Tomás Reyes",    pos:"LI",  shooting:38, def:68, phys:67 },
-  { name:"Javier Cano",    pos:"MCD", shooting:50, def:78, phys:76 },
-  { name:"Pablo Ortega",   pos:"MCD", shooting:45, def:75, phys:74 },
-  { name:"Andrés Mora",    pos:"MC",  shooting:60, def:60, phys:68 },
-  { name:"Sergio Leal",    pos:"MC",  shooting:58, def:58, phys:66 },
-  { name:"Samuel Ramos",   pos:"MC",  shooting:52, def:54, phys:64 },
-  { name:"Adrián Fuentes", pos:"MCO", shooting:72, def:42, phys:62 },
-  { name:"Nicolás Peña",   pos:"MCO", shooting:68, def:38, phys:60 },
-  { name:"Gonzalo Prieto", pos:"MCO", shooting:64, def:36, phys:58 },
-  { name:"Raúl Nieto",     pos:"EI",  shooting:72, def:32, phys:68 },
-  { name:"Óscar Navarro",  pos:"EI",  shooting:68, def:28, phys:64 },
-  { name:"Diego Flores",   pos:"ED",  shooting:70, def:30, phys:66 },
-  { name:"Héctor Vargas",  pos:"ED",  shooting:66, def:26, phys:62 },
-  { name:"Miguel Torres",  pos:"DC",  shooting:88, def:22, phys:82 },
-  { name:"Cristian Blanco",pos:"DC",  shooting:84, def:20, phys:80 },
-  { name:"Pedro Ríos",     pos:"DC",  shooting:80, def:18, phys:78 },
-  { name:"Roberto Iglesias",pos:"DC", shooting:76, def:16, phys:76 },
-];
-
-// ─────────────────────────────────────────────
 // MOTOR DE CÁLCULO
 // ─────────────────────────────────────────────
 function avg(arr) { return arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 65; }
@@ -178,25 +289,26 @@ function calcSquadStrength(squad) {
   return { atk, def: defFinal, scorers };
 }
 
-function calcMyStrength() {
-  const byPos  = pos => MY_SQUAD.filter(p => p.pos === pos).map(p => p.shooting);
-  const defStat= pos => MY_SQUAD.filter(p => p.pos === pos).map(p => p.def || 60);
+// Calcula la fuerza del 11 inicial seleccionado por el jugador
+function calcLineupStrength(lineup) {
+  const byPos = pos => lineup.filter(p => p && p.pos === pos).map(p => p.shooting || 65);
+  const defByPos = pos => lineup.filter(p => p && p.pos === pos).map(p => p.def || 60);
   const avgDC  = avg(byPos("DC")),  avgEI  = avg(byPos("EI")),  avgED  = avg(byPos("ED"));
   const avgMCO = avg(byPos("MCO")), avgMC  = avg(byPos("MC")),  avgMCD = avg(byPos("MCD"));
-  const avgDEF = avg(defStat("DEF")), avgLD = avg(defStat("LD")), avgLI = avg(defStat("LI"));
-  const avgMCDs= avg(defStat("MCD")), avgMCs= avg(defStat("MC"));
-  const avgPOR = 75;
+  const avgDEF = avg(defByPos("DEF")), avgLD = avg(defByPos("LD")), avgLI = avg(defByPos("LI"));
+  const avgMCDs = avg(defByPos("MCD")), avgMCs = avg(defByPos("MC"));
+  const porPlayer = lineup.find(p => p && p.pos === "POR");
+  const avgPOR = porPlayer ? (porPlayer.gkStat || 75) : 75;
   const atk      = avgDC*0.50 + ((avgEI+avgED)/2)*0.25 + avgMCO*0.15 + avgMC*0.07 + avgMCD*0.03;
   const defBase  = avgDEF*0.40 + ((avgLD+avgLI)/2)*0.20 + avgPOR*0.25 + avgMCDs*0.10 + avgMCs*0.05;
   const defFinal = defBase * (1 + (avgPOR / 200));
   return { atk, def: defFinal };
 }
 
-const MY_BASE = calcMyStrength();
-
 function applyTactic(atk, def, tactic) {
-  if (tactic === "ofensivo")   return { atk: atk * 1.10, def: def * 0.95 };
-  if (tactic === "defensivo")  return { atk: atk * 0.95, def: def * 1.10 };
+  if (tactic === "ofensivo")        return { atk: atk * 1.10, def: def * 0.95 };
+  if (tactic === "defensivo")       return { atk: atk * 0.95, def: def * 1.10 };
+  if (tactic === "presión total")   return { atk: atk * 1.08, def: def * 0.88 };
   return { atk, def };
 }
 
@@ -207,13 +319,14 @@ function goalProb(atkN, defN, total) {
   return Math.max(0.006, Math.min(0.09, p));
 }
 
-function pickMyScorer() {
-  const pool    = MY_SQUAD.filter(p => !p.isGK);
+// Goleador del 11 inicial seleccionado
+function pickLineupScorer(lineup) {
+  const pool    = lineup.filter(p => p && p.pos !== "POR");
   const weights = { DC:3, EI:1.5, ED:1.5, MCO:1, MC:0.6, MCD:0.3, DEF:0.2, LD:0.15, LI:0.15 };
-  const total   = pool.reduce((s, p) => s + p.shooting * (weights[p.pos] || 0.2), 0);
+  const total   = pool.reduce((s, p) => s + (p.shooting || 50) * (weights[p.pos] || 0.2), 0);
   let r = Math.random() * total;
-  for (const p of pool) { r -= p.shooting * (weights[p.pos] || 0.2); if (r <= 0) return p.name; }
-  return pool[pool.length - 1].name;
+  for (const p of pool) { r -= (p.shooting || 50) * (weights[p.pos] || 0.2); if (r <= 0) return p.name; }
+  return pool[pool.length - 1]?.name || "Jugador";
 }
 
 function pickRivalScorer(scorers) {
@@ -223,9 +336,10 @@ function pickRivalScorer(scorers) {
   return scorers[scorers.length - 1].n;
 }
 
-function pickMyCard() {
-  const pool = MY_SQUAD.filter(p => !p.isGK);
-  return pool[Math.floor(Math.random() * pool.length)].name;
+// Tarjeta del 11 inicial
+function pickLineupCard(lineup) {
+  const pool = lineup.filter(p => p && p.pos !== "POR");
+  return pool[Math.floor(Math.random() * pool.length)]?.name || "Jugador";
 }
 
 function pickRivalCard(scorers) {
@@ -235,44 +349,81 @@ function pickRivalCard(scorers) {
 // ─────────────────────────────────────────────
 // COMPONENTE PRINCIPAL
 // ─────────────────────────────────────────────
-export default function MatchEngine({ club, setClub, season, calendar, setCalendar, onNextSeason, t, navigate }) {
+export default function MatchEngine({ club, setClub, season, calendar, setCalendar, onNextSeason, formation, mentality, externalPlayers, t, navigate }) {
 
-  const MATCH_INTERVAL_MS = 333; // 333ms × 90 = ~30 segundos por partido
+  const MATCH_INTERVAL_MS = 333;
 
-  const [tactic,       setTacticState] = useState("equilibrado");
-  const [matchState,   setMatchState]  = useState("idle"); // idle | playing | finished
-  const [minute,       setMinute]      = useState(0);
-  const [homeGoals,    setHomeGoals]   = useState(0);
-  const [awayGoals,    setAwayGoals]   = useState(0);
-  const [events,       setEvents]      = useState([]);       // { min, type, player, side }
-  const [otherMatches, setOtherMatches]= useState([]);
-  const [rival,        setRival]       = useState(null);
-  const [rivalStr,     setRivalStr]    = useState(null);
-  const [jornada,      setJornada]     = useState(1);
-  const [yellowCards,  setYellowCards] = useState({});       // { playerName: count }
+  const formationSlots = formations[formation] || formations["4-2-3-1"];
+  const squadPlayers   = externalPlayers || [];
 
-  const intervalRef   = useRef(null);
-  const goalRefH      = useRef(0);
-  const goalRefA      = useRef(0);
-  const minuteRef     = useRef(0);
-  const totalGoalRef  = useRef(0);
-  const yellowRef     = useRef({});
-  const tacticRef     = useRef("equilibrado");
+  // ── Estado de fase: lineup | playing | finished
+  const [phase,        setPhase]        = useState("lineup");
+  const [lineup,       setLineup]       = useState(Array(11).fill(null));
+  const [selectingSlot,setSelectingSlot]= useState(null);
 
-  // ── Cambiar táctica (actúa en tiempo real)
+  const [tactic,       setTacticState]  = useState(mentality || "equilibrado");
+  const [matchState,   setMatchState]   = useState("idle");
+  const [minute,       setMinute]       = useState(0);
+  const [homeGoals,    setHomeGoals]    = useState(0);
+  const [awayGoals,    setAwayGoals]    = useState(0);
+  const [events,       setEvents]       = useState([]);
+  const [otherMatches, setOtherMatches] = useState([]);
+  const [rival,        setRival]        = useState(null);
+  const [rivalStr,     setRivalStr]     = useState(null);
+  const [jornada,      setJornada]      = useState(1);
+  const [yellowCards,  setYellowCards]  = useState({});
+
+  const intervalRef    = useRef(null);
+  const goalRefH       = useRef(0);
+  const goalRefA       = useRef(0);
+  const minuteRef      = useRef(0);
+  const totalGoalRef   = useRef(0);
+  const yellowRef      = useRef({});
+  const tacticRef      = useRef(tactic);
+  const lineupRef      = useRef(lineup);
+
+  useEffect(() => { tacticRef.current = tactic; }, [tactic]);
+  useEffect(() => { lineupRef.current = lineup; }, [lineup]);
+  useEffect(() => () => clearInterval(intervalRef.current), []);
+
   function handleTactic(t) {
     setTacticState(t);
     tacticRef.current = t;
   }
 
-  // ── Seleccionar rival y otros partidos
+  // ── Selección de 11
+  function handleSlotClick(slotIndex) {
+    if (phase !== "lineup") return;
+    setSelectingSlot(slotIndex);
+  }
+
+  function handlePlayerSelect(player) {
+    if (selectingSlot === null) return;
+    const newLineup = [...lineup];
+    const existingIndex = newLineup.findIndex(p => p && p.id === player.id);
+    if (existingIndex !== -1) newLineup[existingIndex] = null;
+    newLineup[selectingSlot] = player;
+    setLineup(newLineup);
+    lineupRef.current = newLineup;
+    setSelectingSlot(null);
+  }
+
+  function handleRemovePlayer(slotIndex) {
+    const newLineup = [...lineup];
+    newLineup[slotIndex] = null;
+    setLineup(newLineup);
+    lineupRef.current = newLineup;
+  }
+
+  const lineupComplete = lineup.filter(Boolean).length === 11;
+
+  // ── Iniciar partido
   function initMatch() {
-    const r = RIVAL_TEAMS[Math.floor(Math.random() * RIVAL_TEAMS.length)];
+    const r    = RIVAL_TEAMS[Math.floor(Math.random() * RIVAL_TEAMS.length)];
     const rStr = calcSquadStrength(r.squad);
     setRival(r);
     setRivalStr(rStr);
-
-    const pool = RIVAL_TEAMS.filter(t => t.name !== r.name);
+    const pool   = RIVAL_TEAMS.filter(t => t.name !== r.name);
     const others = [];
     for (let i = 0; i + 1 < pool.length && others.length < 9; i += 2) {
       const hs = calcSquadStrength(pool[i].squad);
@@ -290,6 +441,7 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
   }
 
   function startMatch() {
+    if (!lineupComplete) return;
     goalRefH.current     = 0;
     goalRefA.current     = 0;
     minuteRef.current    = 0;
@@ -302,6 +454,7 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
     setEvents([]);
     setYellowCards({});
     setMatchState("playing");
+    setPhase("playing");
 
     const { r, rStr, others } = initMatch();
     const othersRef = others.map(o => ({ ...o }));
@@ -311,24 +464,25 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
       const min = minuteRef.current;
       setMinute(min);
 
-      // ── Calcular fuerzas con táctica actual (reactiva)
-      const tac      = tacticRef.current;
-      const tacApplied = applyTactic(MY_BASE.atk, MY_BASE.def, tac);
-      const rand     = 1 + (Math.random() * 0.08 - 0.04);
-      const hAtk     = norm(tacApplied.atk * rand * 1.05);
-      const hDef     = norm(tacApplied.def * rand * 1.02);
-      const aAtk     = norm(rStr.atk * (1 + (Math.random() * 0.08 - 0.04)));
-      const aDef     = norm(rStr.def * (1 + (Math.random() * 0.08 - 0.04)));
-      const tot      = totalGoalRef.current;
+      // Fuerza basada en el 11 seleccionado
+      const currentLineup = lineupRef.current;
+      const lineupStr     = calcLineupStrength(currentLineup);
+      const tac           = tacticRef.current;
+      const tacApplied    = applyTactic(lineupStr.atk, lineupStr.def, tac);
+      const rand          = 1 + (Math.random() * 0.08 - 0.04);
+      const hAtk          = norm(tacApplied.atk * rand * 1.05);
+      const hDef          = norm(tacApplied.def * rand * 1.02);
+      const aAtk          = norm(rStr.atk * (1 + (Math.random() * 0.08 - 0.04)));
+      const aDef          = norm(rStr.def * (1 + (Math.random() * 0.08 - 0.04)));
+      const tot           = totalGoalRef.current;
+      const newEvents     = [];
 
-      const newEvents = [];
-
-      // ── Goles
+      // Goles
       if (Math.random() < goalProb(hAtk, aDef, tot)) {
         goalRefH.current++;
         totalGoalRef.current++;
         setHomeGoals(goalRefH.current);
-        newEvents.push({ min, type: "goal", player: pickMyScorer(), side: "home" });
+        newEvents.push({ min, type: "goal", player: pickLineupScorer(currentLineup), side: "home" });
       }
       if (Math.random() < goalProb(aAtk, hDef, tot)) {
         goalRefA.current++;
@@ -337,24 +491,20 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
         newEvents.push({ min, type: "goal", player: pickRivalScorer(rStr.scorers), side: "away" });
       }
 
-      // ── Tarjetas — dos amarillas = roja automática
+      // Tarjetas — doble amarilla = roja automática
       if (Math.random() < 0.016) {
         const side   = Math.random() < 0.5 ? "home" : "away";
-        const player = side === "home" ? pickMyCard() : pickRivalCard(rStr.scorers);
+        const player = side === "home" ? pickLineupCard(currentLineup) : pickRivalCard(rStr.scorers);
         const yc     = yellowRef.current;
-
         if (yc[player]) {
-          // Segunda amarilla → roja
           delete yc[player];
           yellowRef.current = { ...yc };
           setYellowCards({ ...yc });
-          newEvents.push({ min, type: "red",    player, side });
-          newEvents.push({ min, type: "yellow2", player, side }); // segunda amarilla visual
+          newEvents.push({ min, type: "red",     player, side });
+          newEvents.push({ min, type: "yellow2", player, side });
         } else if (Math.random() < 0.12) {
-          // Roja directa
           newEvents.push({ min, type: "red", player, side });
         } else {
-          // Primera amarilla
           yc[player] = true;
           yellowRef.current = { ...yc };
           setYellowCards({ ...yc });
@@ -362,11 +512,9 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
         }
       }
 
-      if (newEvents.length > 0) {
-        setEvents(prev => [...newEvents.reverse(), ...prev]);
-      }
+      if (newEvents.length > 0) setEvents(prev => [...newEvents.reverse(), ...prev]);
 
-      // ── Otros partidos
+      // Otros partidos
       othersRef.forEach(m => {
         if (!m.done) {
           m.min = min;
@@ -377,91 +525,166 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
       });
       setOtherMatches([...othersRef]);
 
-      // ── Fin del partido
       if (min >= 90) {
         clearInterval(intervalRef.current);
         setMatchState("finished");
+        setPhase("finished");
         setJornada(j => j + 1);
       }
     }, MATCH_INTERVAL_MS);
   }
 
-  // Limpiar intervalo al desmontar
-  useEffect(() => () => clearInterval(intervalRef.current), []);
+  function resetMatch() {
+    setPhase("lineup");
+    setLineup(Array(11).fill(null));
+    lineupRef.current = Array(11).fill(null);
+    setSelectingSlot(null);
+    setEvents([]);
+    setMinute(0);
+    setHomeGoals(0);
+    setAwayGoals(0);
+    setMatchState("idle");
+  }
 
   // ── ESTILOS
   const s = {
-    wrap:       { background:"#0a1628", minHeight:"100vh", padding:12, color:"#e8f4ff", maxWidth:390, margin:"0 auto" },
-    topBar:     { fontSize:11, color:"#5a8ab0", marginBottom:2 },
-    card:       { background:"#112240", borderRadius:12, border:"0.5px solid #1e3a5f", padding:14, marginBottom:10 },
-    clockRow:   { display:"flex", justifyContent:"flex-end", marginBottom:6 },
-    teamsRow:   { display:"flex", alignItems:"center", justifyContent:"space-between", gap:8, marginBottom:8 },
-    teamHome:   { fontSize:15, fontWeight:500, color:"#f1c40f", flex:1, lineHeight:1.3 },
-    teamAway:   { fontSize:15, fontWeight:500, color:"#e8f4ff", flex:1, textAlign:"right", lineHeight:1.3 },
-    score:      { fontSize:30, fontWeight:700, color:"#e8f4ff", minWidth:64, textAlign:"center" },
-    eventsGrid: { display:"grid", gridTemplateColumns:"1fr 1fr", gap:4, minHeight:44, marginBottom:4 },
-    eventHome:  { display:"flex", alignItems:"center", gap:4, fontSize:10, color:"#b0c8e8", padding:"2px 0" },
-    eventAway:  { display:"flex", flexDirection:"row-reverse", alignItems:"center", gap:4, fontSize:10, color:"#b0c8e8", padding:"2px 0" },
-    goalIcon:   { width:14, height:14, borderRadius:"50%", background:"#1D9E75", display:"flex", alignItems:"center", justifyContent:"center", fontSize:8, flexShrink:0, color:"#fff" },
-    yellowIcon: { width:10, height:13, borderRadius:2, background:"#f1c40f", flexShrink:0 },
-    redIcon:    { width:10, height:13, borderRadius:2, background:"#e74c3c", flexShrink:0 },
-    tacRow:     { display:"flex", gap:6, marginBottom:8 },
-    tacBtnBase: { flex:1, border:"0.5px solid #1e3a5f", color:"#5a8ab0", padding:"6px 0", borderRadius:8, fontSize:11, cursor:"pointer", background:"#0d1f3c" },
+    wrap:        { background:"#0a1628", minHeight:"100vh", padding:12, color:"#e8f4ff", maxWidth:390, margin:"0 auto" },
+    topBar:      { fontSize:11, color:"#5a8ab0", marginBottom:2 },
+    card:        { background:"#112240", borderRadius:12, border:"0.5px solid #1e3a5f", padding:14, marginBottom:10 },
+    clockRow:    { display:"flex", justifyContent:"flex-end", marginBottom:6 },
+    teamsRow:    { display:"flex", alignItems:"center", justifyContent:"space-between", gap:8, marginBottom:8 },
+    teamHome:    { fontSize:15, fontWeight:500, color:"#f1c40f", flex:1, lineHeight:1.3 },
+    teamAway:    { fontSize:15, fontWeight:500, color:"#e8f4ff", flex:1, textAlign:"right", lineHeight:1.3 },
+    score:       { fontSize:30, fontWeight:700, color:"#e8f4ff", minWidth:64, textAlign:"center" },
+    eventsGrid:  { display:"grid", gridTemplateColumns:"1fr 1fr", gap:4, minHeight:44, marginBottom:4 },
+    eventHome:   { display:"flex", alignItems:"center", gap:4, fontSize:10, color:"#b0c8e8", padding:"2px 0" },
+    eventAway:   { display:"flex", flexDirection:"row-reverse", alignItems:"center", gap:4, fontSize:10, color:"#b0c8e8", padding:"2px 0" },
+    goalIcon:    { width:14, height:14, borderRadius:"50%", background:"#1D9E75", display:"flex", alignItems:"center", justifyContent:"center", fontSize:8, flexShrink:0, color:"#fff" },
+    yellowIcon:  { width:10, height:13, borderRadius:2, background:"#f1c40f", flexShrink:0 },
+    redIcon:     { width:10, height:13, borderRadius:2, background:"#e74c3c", flexShrink:0 },
+    tacRow:      { display:"flex", gap:6, marginBottom:8 },
+    tacBtnBase:  { flex:1, border:"0.5px solid #1e3a5f", color:"#5a8ab0", padding:"6px 0", borderRadius:8, fontSize:11, cursor:"pointer", background:"#0d1f3c" },
     tacBtnActive:{ flex:1, border:"1.5px solid #1D9E75", color:"#1D9E75", padding:"6px 0", borderRadius:8, fontSize:11, cursor:"pointer", background:"#0a2a1e" },
-    btn:        { width:"100%", background:"#1D9E75", border:"none", color:"#fff", padding:"10px 0", borderRadius:10, fontSize:13, fontWeight:500, cursor:"pointer", marginBottom:8 },
-    btnDisabled:{ width:"100%", background:"#1e3a5f", border:"none", color:"#5a8ab0", padding:"10px 0", borderRadius:10, fontSize:13, cursor:"not-allowed", marginBottom:8 },
-    liveSection:{ background:"#112240", borderRadius:12, border:"0.5px solid #1e3a5f", padding:12 },
-    liveTitle:  { fontSize:11, color:"#1D9E75", textTransform:"uppercase", letterSpacing:1, marginBottom:8, display:"flex", alignItems:"center", gap:6 },
-    liveDot:    { width:7, height:7, borderRadius:"50%", background:"#1D9E75" },
-    liveDotOff: { width:7, height:7, borderRadius:"50%", background:"#5a8ab0" },
-    matchRow:   { display:"flex", justifyContent:"space-between", alignItems:"center", padding:"4px 0", borderBottom:"0.5px solid #1e3a5f" },
-    mTeam:      { fontSize:11, color:"#b0c8e8", flex:1 },
-    mTeamR:     { fontSize:11, color:"#b0c8e8", flex:1, textAlign:"right" },
-    mScore:     { fontSize:12, fontWeight:500, color:"#e8f4ff", minWidth:36, textAlign:"center" },
-    finMsg:     { fontSize:13, textAlign:"center", marginTop:6, fontWeight:500 },
-    backBtn:    { width:"100%", background:"#0d1f3c", border:"0.5px solid #1e3a5f", color:"#5a8ab0", padding:"10px 0", borderRadius:10, fontSize:13, cursor:"pointer", marginBottom:8 },
+    btn:         { width:"100%", background:"#1D9E75", border:"none", color:"#fff", padding:"10px 0", borderRadius:10, fontSize:13, fontWeight:500, cursor:"pointer", marginBottom:8 },
+    btnDisabled: { width:"100%", background:"#1e3a5f", border:"none", color:"#5a8ab0", padding:"10px 0", borderRadius:10, fontSize:13, cursor:"not-allowed", marginBottom:8 },
+    liveSection: { background:"#112240", borderRadius:12, border:"0.5px solid #1e3a5f", padding:12 },
+    liveTitle:   { fontSize:11, color:"#1D9E75", textTransform:"uppercase", letterSpacing:1, marginBottom:8, display:"flex", alignItems:"center", gap:6 },
+    liveDot:     { width:7, height:7, borderRadius:"50%", background:"#1D9E75" },
+    liveDotOff:  { width:7, height:7, borderRadius:"50%", background:"#5a8ab0" },
+    matchRow:    { display:"flex", justifyContent:"space-between", alignItems:"center", padding:"4px 0", borderBottom:"0.5px solid #1e3a5f" },
+    mTeam:       { fontSize:11, color:"#b0c8e8", flex:1 },
+    mTeamR:      { fontSize:11, color:"#b0c8e8", flex:1, textAlign:"right" },
+    mScore:      { fontSize:12, fontWeight:500, color:"#e8f4ff", minWidth:36, textAlign:"center" },
+    finMsg:      { fontSize:13, textAlign:"center", marginTop:6, fontWeight:500 },
+    backBtn:     { width:"100%", background:"#0d1f3c", border:"0.5px solid #1e3a5f", color:"#5a8ab0", padding:"10px 0", borderRadius:10, fontSize:13, cursor:"pointer", marginBottom:8 },
   };
 
-  // ── Arco del reloj
   const progress = (minute / 90) * 113;
   const dash     = `${progress} ${113 - progress}`;
-
-  // ── Resultado final
-  const result = matchState === "finished"
+  const result   = matchState === "finished"
     ? homeGoals > awayGoals ? { text:`Victoria ${homeGoals}-${awayGoals}`, color:"#1D9E75" }
     : awayGoals > homeGoals ? { text:`Derrota ${homeGoals}-${awayGoals}`,  color:"#e74c3c" }
     : { text:`Empate ${homeGoals}-${awayGoals}`, color:"#f1c40f" }
     : null;
 
+  // ─────────────────────────────────────────────
+  // PANTALLA DE SELECCIÓN DE 11
+  // ─────────────────────────────────────────────
+  if (phase === "lineup") {
+    return (
+      <div style={{ flex:1, overflowY:"auto", background:"#0a1628" }}>
+        <div style={{ background:"#0d1f3c", padding:"16px 20px", borderBottom:"0.5px solid #1e3a5f", display:"flex", alignItems:"center", gap:12 }}>
+          <button onClick={() => navigate("home")} style={{ background:"none", border:"none", color:"#5a8ab0", fontSize:20, cursor:"pointer", padding:0 }}>←</button>
+          <h1 style={{ fontSize:18, fontWeight:500, color:"#e8f4ff", margin:0 }}>Seleccionar 11</h1>
+          <span style={{ marginLeft:"auto", fontSize:12, color: lineupComplete ? "#1D9E75" : "#5a8ab0" }}>
+            {lineup.filter(Boolean).length}/11
+          </span>
+        </div>
+
+        {/* Campo con posiciones */}
+        <div style={{ position:"relative", width:"100%", paddingBottom:"130%", background:"#0a3d1a", overflow:"hidden" }}>
+          <div style={{ position:"absolute", inset:0 }}>
+            <div style={{ position:"absolute", top:"50%", left:"5%", right:"5%", height:"0.5px", background:"rgba(255,255,255,0.15)" }} />
+            <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:"20%", paddingBottom:"20%", borderRadius:"50%", border:"0.5px solid rgba(255,255,255,0.15)" }} />
+            <div style={{ position:"absolute", bottom:"5%", left:"25%", right:"25%", height:"18%", border:"0.5px solid rgba(255,255,255,0.15)", borderBottom:"none" }} />
+            <div style={{ position:"absolute", top:"5%", left:"25%", right:"25%", height:"18%", border:"0.5px solid rgba(255,255,255,0.15)", borderTop:"none" }} />
+            {formationSlots.map((slot, i) => {
+              const player = lineup[i];
+              return (
+                <div key={slot.id} onClick={() => player ? handleRemovePlayer(i) : handleSlotClick(i)}
+                  style={{ position:"absolute", left:slot.x+"%", top:slot.y+"%", transform:"translate(-50%,-50%)", display:"flex", flexDirection:"column", alignItems:"center", gap:2, cursor:"pointer" }}>
+                  <div style={{ width:34, height:34, borderRadius:"50%", background: player ? posColor[slot.pos] : "rgba(255,255,255,0.1)", border: player ? "2px solid rgba(255,255,255,0.4)" : "2px dashed rgba(255,255,255,0.3)", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                    {player
+                      ? <span style={{ fontSize:7, color:"#fff", fontWeight:500, textAlign:"center", padding:"0 2px", lineHeight:1.2 }}>{player.name.split(" ")[0]}</span>
+                      : <span style={{ fontSize:9, color:"rgba(255,255,255,0.4)" }}>+</span>
+                    }
+                  </div>
+                  <span style={{ fontSize:8, color: player ? "#1D9E75" : "rgba(255,255,255,0.3)", background:"rgba(0,0,0,0.5)", padding:"1px 3px", borderRadius:2 }}>{slot.pos}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Lista de jugadores al seleccionar slot */}
+        {selectingSlot !== null && (
+          <div style={{ padding:"12px 16px", background:"#0d1f3c", borderTop:"0.5px solid #1e3a5f" }}>
+            <p style={{ fontSize:11, color:"#5a8ab0", margin:"0 0 8px", textTransform:"uppercase", letterSpacing:"0.08em" }}>
+              Elegir jugador — {formationSlots[selectingSlot]?.pos}
+            </p>
+            <div style={{ display:"flex", flexDirection:"column", gap:6, maxHeight:200, overflowY:"auto" }}>
+              {squadPlayers.filter(p => !lineup.some((l, i) => l && l.id === p.id && i !== selectingSlot)).map(p => (
+                <div key={p.id} onClick={() => handlePlayerSelect(p)}
+                  style={{ display:"flex", alignItems:"center", gap:10, background:"#112240", borderRadius:8, padding:"8px 12px", cursor:"pointer", border:"0.5px solid #1e3a5f" }}>
+                  <span style={{ fontSize:10, background: posColor[p.pos] || "#333", color:"#fff", padding:"2px 6px", borderRadius:4, minWidth:28, textAlign:"center" }}>{p.pos}</span>
+                  <span style={{ fontSize:13, color:"#e8f4ff", flex:1 }}>{p.name}</span>
+                  <span style={{ fontSize:14, fontWeight:500, color:"#1D9E75" }}>{p.overall || p.shooting || "-"}</span>
+                </div>
+              ))}
+            </div>
+            <button onClick={() => setSelectingSlot(null)} style={{ marginTop:8, width:"100%", background:"none", border:"0.5px solid #1e3a5f", color:"#5a8ab0", padding:"8px 0", borderRadius:8, cursor:"pointer", fontSize:12 }}>Cancelar</button>
+          </div>
+        )}
+
+        <div style={{ padding:16 }}>
+          <button onClick={startMatch} disabled={!lineupComplete}
+            style={{ width:"100%", background: lineupComplete ? "#1D9E75" : "#1e3a5f", border:"none", color: lineupComplete ? "#fff" : "#5a8ab0", padding:"12px 0", borderRadius:10, fontSize:14, fontWeight:500, cursor: lineupComplete ? "pointer" : "not-allowed" }}>
+            {lineupComplete ? "Jugar partido" : `Faltan ${11 - lineup.filter(Boolean).length} jugadores`}
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ─────────────────────────────────────────────
+  // PANTALLA DE PARTIDO EN VIVO
+  // ─────────────────────────────────────────────
   return (
     <div style={s.wrap}>
-      <div style={s.topBar}>Segunda División · Jornada {jornada}</div>
+      <div style={s.topBar}>
+        {club?.division === 1 ? "Primera División" : club?.division === 2 ? "Segunda División" : "Tercera División"} · Jornada {jornada}
+      </div>
 
-      {/* ── TARJETA DEL PARTIDO */}
+      {/* Tarjeta del partido */}
       <div style={s.card}>
-        {/* Reloj */}
         <div style={s.clockRow}>
           <div style={{ width:44, height:44, position:"relative", display:"flex", alignItems:"center", justifyContent:"center" }}>
             <svg viewBox="0 0 44 44" width="44" height="44" style={{ position:"absolute", top:0, left:0 }}>
               <circle cx="22" cy="22" r="18" fill="none" stroke="#1e3a5f" strokeWidth="3"/>
               <circle cx="22" cy="22" r="18" fill="none" stroke="#1D9E75" strokeWidth="3"
-                strokeDasharray={dash} strokeLinecap="round"
-                transform="rotate(-90 22 22)"/>
+                strokeDasharray={dash} strokeLinecap="round" transform="rotate(-90 22 22)"/>
             </svg>
             <span style={{ fontSize:12, fontWeight:500, color:"#e8f4ff", zIndex:1 }}>{minute}'</span>
           </div>
         </div>
 
-        {/* Equipos y marcador */}
         <div style={s.teamsRow}>
-          <span style={s.teamHome}>UD Las Palmas</span>
+          <span style={s.teamHome}>{club?.name || "Tu equipo"}</span>
           <span style={s.score}>{homeGoals} - {awayGoals}</span>
           <span style={s.teamAway}>{rival?.name || "-"}</span>
         </div>
 
-        {/* Eventos divididos por columna */}
         <div style={s.eventsGrid}>
-          {/* Columna local */}
           <div>
             {events.filter(e => e.side === "home").map((e, i) => (
               <div key={i} style={s.eventHome}>
@@ -473,7 +696,6 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
               </div>
             ))}
           </div>
-          {/* Columna visitante */}
           <div>
             {events.filter(e => e.side === "away").map((e, i) => (
               <div key={i} style={s.eventAway}>
@@ -487,11 +709,10 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
           </div>
         </div>
 
-        {/* Resultado final */}
         {result && <div style={{ ...s.finMsg, color: result.color }}>{result.text}</div>}
       </div>
 
-      {/* ── TÁCTICA */}
+      {/* Tácticas en vivo */}
       <div style={s.tacRow}>
         {["ofensivo","equilibrado","defensivo"].map(t => (
           <button key={t} onClick={() => handleTactic(t)}
@@ -501,21 +722,18 @@ export default function MatchEngine({ club, setClub, season, calendar, setCalend
         ))}
       </div>
 
-      {/* ── BOTONES */}
-      {matchState === "idle" && (
-        <button style={s.btn} onClick={startMatch}>Jugar jornada {jornada}</button>
-      )}
+      {/* Botones */}
       {matchState === "playing" && (
         <button style={s.btnDisabled} disabled>Partido en curso...</button>
       )}
       {matchState === "finished" && (
         <>
           <button style={s.btn} onClick={() => navigate("home")}>Volver al inicio</button>
-          <button style={{ ...s.backBtn }} onClick={startMatch}>Jugar siguiente jornada</button>
+          <button style={s.backBtn} onClick={resetMatch}>Jugar siguiente jornada</button>
         </>
       )}
 
-      {/* ── RESULTADOS EN VIVO */}
+      {/* Resultados en vivo */}
       <div style={s.liveSection}>
         <div style={s.liveTitle}>
           <div style={matchState === "playing" ? s.liveDot : s.liveDotOff}/>
