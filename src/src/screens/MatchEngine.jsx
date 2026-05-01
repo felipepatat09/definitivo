@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from 'react';
+
+
 
 const formations = {
   "4-2-3-1": [

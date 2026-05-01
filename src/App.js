@@ -5,7 +5,9 @@ import Tactics     from "./src/screens/Tactics.jsx";
 import League      from "./src/screens/League.jsx";
 import Market      from "./src/screens/Market.jsx";
 import StartMenu   from "./src/screens/StartMenu.jsx";
-import MatchEngine from "./src/screens/MatchEngine.jsx";
+// ✅ Correcto
+// ✅ Correcto
+import MatchEngine from './src/screens/MatchEngine';
 import { useTranslation } from "./src/i18n.js";
 
 const DIVISIONS = { 1: "Primera División", 2: "Segunda División", 3: "Tercera División" };
